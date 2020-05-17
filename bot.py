@@ -109,8 +109,9 @@ def repeat_all_messages(message):
         bot.send_sticker(message.chat.id, 'CAACAgIAAxkBAAIKIl675xAmpJrrYw7GNLDnyyUIYg9fAALIAQACVp29Ch5kbWu8BAS4GQQ')
         bot.send_message(message.chat.id, pars_virus(message.text.lower().split(' ')[1]))
 
-    elif message.text.lower().split(' ')[0] == 'погода':  # ИНФА ПО ПОГОДЕ с проверкой
-        weather_answer = Weather(message.split(' ')[1])
+    elif message.text.lower().split(' ')[0] == 'погода':
+        req_weather = message.text.lower().split(' ')[1]# ИНФА ПО ПОГОДЕ с проверкой
+        weather_answer = Weather(req_weather)
         if weather_answer:
             bot.send_message(message.chat.id, weather_answer.weather_in_day())
         else:
