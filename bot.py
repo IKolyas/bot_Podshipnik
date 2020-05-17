@@ -1,7 +1,8 @@
 import telebot
 import time as timer
 import os
-from pars import Weather, pars_virus, parser_news
+from pars import Weather
+from pars import pars_virus, parser_news
 from pgSQL import base_groupUser, reg_ex, birthday, request_answer
 from config import day_th
 from telebot import types

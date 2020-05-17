@@ -4,9 +4,9 @@ from bs4 import BeautifulSoup as BS
 
 """Информация о погоде в определённом городе по запросу"""
 
-
+opWM = os.environ.get('OpenWeatherMap')
 class Weather:
-    opWM = os.environ.get('OpenWeatherMap')
+
     apiID = opWM
 
     def __init__(self, city):
