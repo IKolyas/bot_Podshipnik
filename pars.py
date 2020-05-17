@@ -49,7 +49,7 @@ class Weather:
             self.wind = "Северо-Запад"
         else:
             self.wind = "Северо-Запад"
-        return f"Погода на текущие сутки в городе {self.city}: \n" \
+        return f"Погода в городе {self.city}: \n" \
                f"Температура воздуха: {data['main']['temp']}°С " \
                f"({data['main']['temp_min']}...{data['main']['temp_max']}°С)\n" \
                f"    ощущается как {data['main']['feels_like']}°С, {data['weather'][0]['description']} \n" \
