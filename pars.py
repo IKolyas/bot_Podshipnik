@@ -1,6 +1,6 @@
 import requests
 from bs4 import BeautifulSoup as BS
-
+import os
 
 """Информация о погоде в определённом городе по запросу"""
 
