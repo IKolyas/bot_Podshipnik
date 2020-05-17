@@ -2,9 +2,11 @@ import requests
 from bs4 import BeautifulSoup as BS
 import os
 
-"""Информация о погоде в определённом городе по запросу"""
 
 opWM = os.environ.get('OpenWeatherMap')
+
+
+"""Информация о погоде в определённом городе по запросу"""
 class Weather:
 
     apiID = opWM
@@ -89,7 +91,7 @@ def pars_virus(city='Салехард'):
            Выздоровело: {recovered_all} чел. {recovered_today} (сегодня) \n
            '''
 
-
+"""Парсин гиа новости."""
 def parser_news():
     viki = requests.get(f'https://ria.ru/')
     html_viki = BS(viki.content, 'html.parser')

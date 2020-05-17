@@ -20,18 +20,14 @@ bot = telebot.AsyncTeleBot(token)
 # - weather
 # - news
 
-
-
 # СТАРТ
 @bot.message_handler(commands=['start'])
 def send_welcome(message):
     bot.send_sticker(message.chat.id, 'CAACAgIAAxkBAAIKLV69A4QEgThXNn3yXtg8r5jOy_2YAAJFAAMNttIZjBr_PIJ9KtgZBA')
     timer.sleep(0.1)
     bot.send_message(message.chat.id,
-                     f"Привет, Люди! \nЯ бот группы Подшипник! \nПока что я немного туповат, \
+                     f"Привет, Люди! \nЯ бот. \nПока что я немного туповат, \
                      но мой создатель трудится над этим. \nВ общем чате для общения со мной используйте ' / '")
-
-
 
 # - virus
 @bot.message_handler(commands=['virus'])
@@ -80,10 +76,10 @@ def get_birth(message):
         bot.send_message(message.chat.id, "Отлично, ты зарегистрирован!")
     except Exception as ex:
         print(ex)
-        bot.send_message(message.chat.id, "Ошибочка!")
+        bot.send_message(message.chat.id, "Ошибочка! Проверьте правильность вводимых данных.")
 
 
- #НОВОСТИ
+"""Новости"""
 @bot.message_handler(commands=['news'])
 def send_news(message):
     bot.send_sticker(message.chat.id, 'CAACAgIAAxkBAAIKL169A7a8k0SyrPkWW_6zF_fpFsU8AAI5AAMNttIZXzBAtjlTMTQZBA')
@@ -94,33 +90,29 @@ def send_news(message):
     keyboard.add(yes_button)
     bot.send_message(message.chat.id, f"{parser_news()}", reply_markup=keyboard)
     timer.sleep(5)
+
+    """Проверка, день рождения у зарегистрированных пользователей"""
     day = birthday(day_th)
     if day is not False:
         bot.send_message(message.chat.id, f"Сегодня день рождения у {day}! \nПоздравляем!")
         bot.send_sticker(message.chat.id, 'CAACAgIAAxkBAAIKKl68gWv_U4RcCpIXEsIT9WDCqguWAAI7AAPRYSgLXdLS1ytBP50ZBA')
 
-        # ОБРАБОТКА СОБЫТИЙ
-
-
-# Обработчик текстовых сообщений
+"""Обработчик текстовых сообщений"""
 @bot.message_handler(content_types=["text"])
 def repeat_all_messages(message):
     message.text = message.text.replace("/", "")
-    if message.text.lower().split(' ')[0] == 'вирус':  # ИНФА ПО ВИРУСУ
+
+    """информация по зараженным короновирусом(запрос в телеграме "вирус 'название города'")"""
+    if message.text.lower().split(' ')[0] == 'вирус':
         bot.send_sticker(message.chat.id, 'CAACAgIAAxkBAAIKIl675xAmpJrrYw7GNLDnyyUIYg9fAALIAQACVp29Ch5kbWu8BAS4GQQ')
         bot.send_message(message.chat.id, pars_virus(message.text.lower().split(' ')[1]))
 
+    """информация о погоде(запрос в телеграме "погода 'название города'")"""
     elif message.text.lower().split(' ')[0] == 'погода':
-        req_weather = message.text.lower().split(' ')[1]# ИНФА ПО ПОГОДЕ с проверкой
+        req_weather = message.text.lower().split(' ')[1] # ИНФА ПО ПОГОДЕ с проверкой
         weather_answer = Weather(req_weather)
-        if weather_answer:
-            bot.send_message(message.chat.id, weather_answer.weather_in_day())
-        else:
-            keyboard = types.InlineKeyboardMarkup()  # ПОИСК В ЯНДЕКСЕ ПРИ ОШИБКЕ ОТВЕТА
-            yes_button = types.InlineKeyboardButton(text="ДА",
-                                                    url=f"https://yandex.ru/search/?text={message.text.replace(' ', '%20')}")
-            keyboard.add(yes_button)
-            bot.send_message(message.chat.id, 'Не понимаю, о чём Вы? Может посмотрим в сети?', reply_markup=keyboard)
+        bot.send_message(message.chat.id, weather_answer.weather_in_day())
+        del req_weather
 
     else:  # Запрос к базе
         answer = request_answer(message.text)
@@ -135,4 +127,4 @@ def repeat_all_messages(message):
 
 
 if __name__ == '__main__':
-    bot.infinity_polling(none_stop=True, interval=0)
+    bot.infinity_polling(none_stop=True, interval=0.5)
