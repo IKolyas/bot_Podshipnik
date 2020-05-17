@@ -43,7 +43,7 @@ def weather_command(message):
     del weather_city
 
 
-# РЕГИСТРАЦИЯ
+'''Регистрация пользователей'''
 @bot.message_handler(commands=['registration'])
 def reg_user(message):
     if reg_ex(message.from_user.id) is False:
@@ -56,7 +56,7 @@ def reg_user(message):
         bot.send_message(message.from_user.id, "Предлогаю тебе зарегистрироваться, это не займёт много времени...",
                          reply_markup=keyboard)
 
-
+№
 @bot.callback_query_handler(func=lambda call: True)
 def reg_key(call):
     if call.data == "yes":
@@ -72,10 +72,8 @@ def get_birth(message):
     try:
         base_groupUser(message.chat.id, message.from_user.id, message.from_user.first_name,
                        message.from_user.last_name, birth_day)
-        print(message.from_user.last_name)
         bot.send_message(message.chat.id, "Отлично, ты зарегистрирован!")
     except Exception as ex:
-        print(ex)
         bot.send_message(message.chat.id, "Ошибочка! Проверьте правильность вводимых данных.")
 
 
