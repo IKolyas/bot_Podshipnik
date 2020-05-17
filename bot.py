@@ -108,7 +108,7 @@ def repeat_all_messages(message):
         bot.send_message(message.chat.id, pars_virus(message.text.lower().split(' ')[1]))
 
     """информация о погоде(запрос в телеграме "погода 'название города'")"""
-    elif message.text.lower().split(' ')[0] == 'погода':
+    if message.text.lower().split(' ')[0] == 'погода':
         req_weather = message.text.lower().split(' ')[1] # ИНФА ПО ПОГОДЕ с проверкой
         weather_answer = Weather(req_weather)
         bot.send_message(message.chat.id, weather_answer.weather_in_day())
