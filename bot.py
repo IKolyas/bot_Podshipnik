@@ -95,7 +95,7 @@ def send_news(message):
     timer.sleep(5)
     day = birthday(day_th)
     if day is not False:
-        bot.send_message(message.chat.id, f"Сегодня день рождения у {day}! \nПоздравляем!!!")
+        bot.send_message(message.chat.id, f"Сегодня день рождения у {day}! \nПоздравляем!")
         bot.send_sticker(message.chat.id, 'CAACAgIAAxkBAAIKKl68gWv_U4RcCpIXEsIT9WDCqguWAAI7AAPRYSgLXdLS1ytBP50ZBA')
 
         # ОБРАБОТКА СОБЫТИЙ
