@@ -81,8 +81,7 @@ def send_news(message):
     keyboard.add(yes_button)
     bot.send_message(message.chat.id, f"{parser_news()}", reply_markup=keyboard)
     timer.sleep(5)
-
-    """Проверка, день рождения у зарегистрированных пользователей"""
+    #Проверка, день рождения у зарегистрированных пользователей
     day = user_group.birthDay(day_th) #day_th - текущая дата
     if day is not False:
         bot.send_message(message.chat.id, day)
