@@ -65,7 +65,7 @@ def reg_key(call):
 
 def get_birth(message):
     birth_day = message.text.replace("/", "", 1)
-    registration = user_group.reg_user(message.chat.id, message.from_user.id, message.from_user.first_name,
+    registration = user_group.add_user(message.chat.id, message.from_user.id, message.from_user.first_name,
                    message.from_user.last_name, birth_day)
     bot.send_message(message.chat.id, registration)
 
