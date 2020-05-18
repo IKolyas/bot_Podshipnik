@@ -94,4 +94,4 @@ class user_group(BaseModel):
             else:
                 pass
         except Exception:
-            pass
+            return False

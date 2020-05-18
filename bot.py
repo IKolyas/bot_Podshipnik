@@ -82,10 +82,9 @@ def send_news(message):
     timer.sleep(5)
 
     """Проверка, день рождения у зарегистрированных пользователей"""
-    day = birthday(day_th)
+    day = user_group.birthDay(day_th) #day_th - текущая дата
     if day is not False:
-        bot.send_message(message.chat.id, f"Сегодня день рождения у {day}! \nПоздравляем!")
-        bot.send_sticker(message.chat.id, 'CAACAgIAAxkBAAIKKl68gWv_U4RcCpIXEsIT9WDCqguWAAI7AAPRYSgLXdLS1ytBP50ZBA')
+        bot.send_message(message.chat.id, day)
 
 """Обработчик текстовых сообщений"""
 @bot.message_handler(content_types=["text"])
