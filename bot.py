@@ -106,7 +106,7 @@ def repeat_all_messages(message):
         del req_weather
 
     else:  # Запрос к базе
-        answer = request_answer.answer(message.text)
+        answer = request_answer.answer(message.text.lower())
         if answer is False:  # Если нет в базе, поиск в сети
             keyboard = types.InlineKeyboardMarkup()
             yes_button = types.InlineKeyboardButton(text="ДА",
