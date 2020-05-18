@@ -35,7 +35,7 @@ class request_answer(BaseModel):
             ans_message = random.choice(td)
             return ans_message
         except BaseException as e:
-            print("нет ответа в базе!", e)
+            return False
             pass
 
 
