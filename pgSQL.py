@@ -12,11 +12,8 @@ class BaseModel(Model):
     class Meta:
         database = db
 
-
-""""Вопрос - ответ, БД"""
-
-
 class request_answer(BaseModel):
+    """"Вопрос - ответ, БД"""
     request = TextField()
     answer1 = TextField()
     answer2 = TextField()
@@ -25,6 +22,7 @@ class request_answer(BaseModel):
     id = AutoField()
 
     @staticmethod
+    #Поиск ответа на заданный вопрос в базе
     def answer(req_ans):
         try:
             sel = request_answer.select().where(request_answer.request == req_ans)
@@ -39,17 +37,15 @@ class request_answer(BaseModel):
             pass
 
 
-"""База данных зарегистрированных пользователей"""
-
 
 class user_group(BaseModel):
+    """База данных зарегистрированных пользователей"""
     id = AutoField()
     chat_id = BigIntegerField()
     user_id = BigIntegerField()
     user_name = FixedCharField()
     user_last_name = FixedCharField()
     birth_day = DateField()
-
 
     # @staticmethod
     # # Проверка в базе пользователя
@@ -59,11 +55,9 @@ class user_group(BaseModel):
     #         return True
     #     except DoesNotExist as de:
     #         pass
-    #
-
-    """добаление нового пользователя"""
 
     @staticmethod
+    #Добавить пользователя
     def add_user(chatId, userId, user_name, user_last_name, birth_day):
         try:
             sel = user_group.select().where(user_group.user_id == userId).get()
@@ -79,14 +73,11 @@ class user_group(BaseModel):
             nos.save()
             return f'Вы успешно зарегистрированы!'
 
-    """Проверка дня рождения"""
-
     @staticmethod
+    #Проверка день рождения
     def birthDay(self):
         try:
             sel = user_group.select().where(user_group.birth_day == self).get()
-            print(sel.birth_day, sel.user_name)
-            print(self)
             if str(sel.birth_day) == str(self):
                 return f"Сегодня день рождения у '{sel.user_name} {sel.user_last_name.replace('None', '')}'!!!\n" \
                        f"Поздравляем!!!\n" \
