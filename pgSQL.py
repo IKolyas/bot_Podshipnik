@@ -13,15 +13,19 @@ def birthday(th_date):
                                   host='213.219.214.91',
                                   port=5432)) as conn:  # Не забудь прописать хост
         with conn.cursor() as cursor:
-            cursor.execute(
-                f'''SELECT user_name, user_last_name, birth_day FROM public.user_group where birth_day = '{th_date}';''')
-            user_ex = cursor.fetchall()
-            if user_ex is not None:
-                birs = (list(user_ex)[0][0].replace(' ', '') + " " + list(user_ex)[0][1].replace(' ', ''))
-                print(birs)
-                return birs
-            else:
-                return False
+            try:
+                cursor.execute(
+                    f'''SELECT user_name, user_last_name, birth_day FROM public.user_group where birth_day = '{th_date}';''')
+                user_ex = cursor.fetchall()
+                if user_ex is not None:
+                    birs = (list(user_ex)[0][0].replace(' ', '') + " " + list(user_ex)[0][1].replace(' ', ''))
+                    print(birs)
+                    return birs
+                else:
+                    return False
+            except Exception:
+                print("Error dataBase")
+                pass
 
 
 # создание базы и регистрация пользователей
