@@ -1,5 +1,6 @@
 from peewee import *
 import random
+import os
 
 passe = os.environ.get('SQL_pass')
 db = PostgresqlDatabase('telebot', user='van4o2', password=passe, host='213.219.214.91', port=5432)
