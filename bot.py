@@ -12,7 +12,7 @@ from datetime import datetime, date, time
 token = os.environ.get('Bot_Toketn')
 bot = telebot.AsyncTeleBot(token)
 
-
+# heroku logs --tail
 # КОМАНДЫ
 # - start
 # - registration
