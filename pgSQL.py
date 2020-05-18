@@ -18,7 +18,7 @@ def birthday(th_date):
                     f'''SELECT user_name, user_last_name, birth_day FROM public.user_group where birth_day = '{th_date}';''')
                 user_ex = cursor.fetchall()
                 if user_ex is not None:
-                    birs = (list(user_ex)[0][0].replace(' ', '') + " " + list(user_ex)[0][1].replace(' ', ''))
+                    birs = (list(user_ex)[0][0].replace(' ', ''))
                     print(birs)
                     return birs
                 else:
