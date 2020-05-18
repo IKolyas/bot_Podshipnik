@@ -90,7 +90,7 @@ class user_group(BaseModel):
             if str(sel.birth_day) == str(self):
                 return f"Сегодня день рождения у '{sel.user_name} {sel.user_last_name.replace('None', '')}'!!!\n" \
                        f"Поздравляем!!!\n" \
-                       f"CAACAgIAAxkBAAIKKl68gWv_U4RcCpIXEsIT9WDCqguWAAI7AAPRYSgLXdLS1ytBP50ZBA"
+
             else:
                 pass
         except Exception:

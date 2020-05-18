@@ -85,6 +85,7 @@ def send_news(message):
     day = user_group.birthDay(day_th) #day_th - текущая дата
     if day is not False:
         bot.send_message(message.chat.id, day)
+        bot.send_sticker(message.chat.id, "CAACAgIAAxkBAAIKKl68gWv_U4RcCpIXEsIT9WDCqguWAAI7AAPRYSgLXdLS1ytBP50ZBA")
 
 """Обработчик текстовых сообщений"""
 @bot.message_handler(content_types=["text"])
