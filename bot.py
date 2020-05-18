@@ -3,7 +3,7 @@ import time as timer
 import os
 from pars import Weather
 from pars import pars_virus, parser_news
-from pgSQL import base_groupUser, reg_ex, birthday, request_answer
+from pgSQL import *
 from config import day_th
 from telebot import types
 from datetime import datetime, date, time
@@ -46,15 +46,12 @@ def weather_command(message):
 '''Регистрация пользователей'''
 @bot.message_handler(commands=['registration'])
 def reg_user(message):
-    if reg_ex(message.from_user.id) is False:
-        bot.send_message(message.from_user.id, "Пользователь с таким ID уже зарегистрирован!")
-    else:
-        keyboard = types.InlineKeyboardMarkup()
-        yes_button = types.InlineKeyboardButton(text="ДА", callback_data="yes")
-        no_button = types.InlineKeyboardButton(text="Подумаю ...", callback_data="no")
-        keyboard.add(yes_button, no_button)
-        bot.send_message(message.from_user.id, "Предлогаю тебе зарегистрироваться, это не займёт много времени...",
-                         reply_markup=keyboard)
+    keyboard = types.InlineKeyboardMarkup()
+    yes_button = types.InlineKeyboardButton(text="ДА", callback_data="yes")
+    no_button = types.InlineKeyboardButton(text="Подумаю ...", callback_data="no")
+    keyboard.add(yes_button, no_button)
+    bot.send_message(message.from_user.id, "Предлогаю тебе зарегистрироваться, это не займёт много времени...",
+                     reply_markup=keyboard)
 
 @bot.callback_query_handler(func=lambda call: True)
 def reg_key(call):
@@ -68,12 +65,8 @@ def reg_key(call):
 
 def get_birth(message):
     birth_day = message.text.replace("/", "", 1)
-    try:
-        base_groupUser(message.chat.id, message.from_user.id, message.from_user.first_name,
-                       message.from_user.last_name, birth_day)
-        bot.send_message(message.chat.id, "Отлично, ты зарегистрирован!")
-    except Exception as ex:
-        bot.send_message(message.chat.id, "Ошибочка! Проверьте правильность вводимых данных.")
+    bot.send_message(message.chat.id, user_group.reg_user(message.chat.id, message.from_user.id, message.from_user.first_name,
+                   message.from_user.last_name, birth_day))
 
 
 """Новости"""
@@ -112,7 +105,7 @@ def repeat_all_messages(message):
         del req_weather
 
     else:  # Запрос к базе
-        answer = request_answer(message.text)
+        answer = request_answer.answer(message.text)
         if answer is False:  # Если нет в базе, поиск в сети
             keyboard = types.InlineKeyboardMarkup()
             yes_button = types.InlineKeyboardButton(text="ДА",

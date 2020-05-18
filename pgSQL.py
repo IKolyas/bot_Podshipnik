@@ -1,98 +1,96 @@
-import psycopg2
+from peewee import *
 import random
-import os
-from contextlib import closing
 
 passe = os.environ.get('SQL_pass')
-# ДНИ РОЖДЕНИЯ
-def birthday(th_date):
-    baseEx()
-    with closing(psycopg2.connect(dbname='telebot',
-                                  user='van4o2',
-                                  password=passe,
-                                  host='213.219.214.91',
-                                  port=5432)) as conn:  # Не забудь прописать хост
-        with conn.cursor() as cursor:
-            try:
-                cursor.execute(
-                    f'''SELECT user_name, user_last_name, birth_day FROM public.user_group where birth_day = '{th_date}';''')
-                user_ex = cursor.fetchall()
-                if user_ex is not None:
-                    birs = (list(user_ex)[0][0].replace(' ', ''))
-                    print(birs)
-                    return birs
-                else:
-                    return False
-            except Exception:
-                print("Error dataBase")
-                pass
+db = PostgresqlDatabase('telebot', user='van4o2', password=passe, host='213.219.214.91', port=5432)
 
 
-# создание базы и регистрация пользователей
-def baseEx():
-    with closing(psycopg2.connect(dbname='telebot',
-                                  user='van4o2',
-                                  password=passe,
-                                  host='213.219.214.91',
-                                  port=5432)) as conn:  # Не забудь прописать хост
-        with conn.cursor() as cursor:
-            cursor.execute('''CREATE TABLE IF NOT EXISTS public.user_group (id serial, chat_id bigint NOT NULL, user_id bigint NOT NULL, user_name character(20) NOT NULL, user_last_name character(20) NOT NULL, birth_day date NOT NULL, PRIMARY KEY (id, user_id)); ALTER TABLE public.user_group OWNER to van4o2;''')
-            conn.commit()
-            conn.close()
+class BaseModel(Model):
+    """Создание базовой модели"""
+
+    class Meta:
+        database = db
 
 
-# ПРОВЕРКА НА НАЛИЧИЕ ПОЛЬЗОВАТЕЛЯ В БАЗЕ
+""""Вопрос - ответ, БД"""
 
 
-def reg_ex(user_id):
-    baseEx()
-    with closing(psycopg2.connect(dbname='telebot',
-                                  user='van4o2',
-                                  password=passe,
-                                  host='213.219.214.91',
-                                  port=5432)) as conn:  # Не забудь прописать хост
-        with conn.cursor() as cursor:
-            cursor.execute(f'''SELECT user_id FROM public.user_group where user_id = '{user_id}';''')
-            user_ex = cursor.fetchall()
-            if len(user_ex) >= 1:
-                return False
-            conn.close()
+class request_answer(BaseModel):
+    request = TextField()
+    answer1 = TextField()
+    answer2 = TextField()
+    answer3 = TextField()
+    answer4 = TextField()
+    id = AutoField()
+
+    @staticmethod
+    def answer(req_ans):
+        try:
+            sel = request_answer.select().where(request_answer.request == req_ans)
+            td = []
+            print(sel)
+            for i in sel:
+                td.extend([i.answer1, i.answer2, i.answer3, i.answer4])
+            ans_message = random.choice(td)
+            return ans_message
+        except BaseException as e:
+            print("нет ответа в базе!", e)
+            pass
 
 
-# создание базы и регистрация пользователей
-def base_groupUser(chat_id, user_id, user_name, user_last_name, birth_day):
-    baseEx()
-    with closing(psycopg2.connect(dbname='telebot',
-                                  user='van4o2',
-                                  password=passe,
-                                  host='213.219.214.91',
-                                  port=5432)) as conn:  # Не забудь прописать хост
-        with conn.cursor() as cursor:
-            try:
-                cursor.execute(f'''INSERT INTO public.user_group
-                (chat_id, user_id, user_name, user_last_name, birth_day)
-                VALUES ('{chat_id}','{user_id}','{user_name}','{user_last_name}','{birth_day}');''')
-            except TypeError as er:
-                print('Ошибка данных', er)
-            conn.commit()
-            conn.close()
+"""База данных зарегистрированных пользователей"""
 
 
+class user_group(BaseModel):
+    id = AutoField()
+    chat_id = BigIntegerField()
+    user_id = BigIntegerField()
+    user_name = FixedCharField()
+    user_last_name = FixedCharField()
+    birth_day = DateField()
 
-# Вопрос-ответ из базы
-def request_answer(self):
-    with closing(psycopg2.connect(dbname='telebot',
-                                  user='van4o2',
-                                  password=passe,
-                                  host='213.219.214.91',
-                                  port=5432)) as conn:  # Не забудь прописать хост
-        with conn.cursor() as cursor:
-            baseEx()
-            cursor.execute(
-                f"SELECT answer1, answer2, answer3, answer4 FROM public.request_answer where request = '{self.lower().replace('!', '')}' ")
-            self = cursor.fetchone()
-            if self is not None:
-                rand = random.randint(0, len(self) - 1)  # рандомим ответ из возможных вариантов
-                return self[rand]
+
+    # @staticmethod
+    # # Проверка в базе пользователя
+    # def userEx(IdUser):
+    #     try:
+    #         sel = user_group.select().where(user_group.user_id == IdUser).get()
+    #         return True
+    #     except DoesNotExist as de:
+    #         pass
+    #
+
+    """добаление нового пользователя"""
+
+    @staticmethod
+    def add_user(chatId, userId, user_name, user_last_name, birth_day):
+        try:
+            sel = user_group.select().where(user_group.user_id == userId).get()
+
+            return f'Ошибка \nПользователь с таким ID уже существует!'
+        except DoesNotExist as de:
+            nos = user_group(
+                chat_id=chatId,
+                user_id=userId,
+                user_name=user_name,
+                user_last_name=user_last_name,
+                birth_day=birth_day)
+            nos.save()
+            return f'Вы успешно зарегистрированы!'
+
+    """Проверка дня рождения"""
+
+    @staticmethod
+    def birthDay(self):
+        try:
+            sel = user_group.select().where(user_group.birth_day == self).get()
+            print(sel.birth_day, sel.user_name)
+            print(self)
+            if str(sel.birth_day) == str(self):
+                return f"Сегодня день рождения у '{sel.user_name} {sel.user_last_name.replace('None', '')}'!!!\n" \
+                       f"Поздравляем!!!\n" \
+                       f"CAACAgIAAxkBAAIKKl68gWv_U4RcCpIXEsIT9WDCqguWAAI7AAPRYSgLXdLS1ytBP50ZBA"
             else:
-                return False
+                pass
+        except Exception:
+            pass
