@@ -12,3 +12,4 @@ soupsieve==2.0
 pyTelegramBotAPI==3.7.1
 requests==2.23.0
 beautifulsoup4==4.9.0
+peewee==3.13.3
