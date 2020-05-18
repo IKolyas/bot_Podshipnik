@@ -56,7 +56,6 @@ def reg_user(message):
         bot.send_message(message.from_user.id, "Предлогаю тебе зарегистрироваться, это не займёт много времени...",
                          reply_markup=keyboard)
 
-№
 @bot.callback_query_handler(func=lambda call: True)
 def reg_key(call):
     if call.data == "yes":
