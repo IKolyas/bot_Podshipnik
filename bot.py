@@ -3,7 +3,7 @@ import time as timer
 import os
 from pars import Weather
 from pars import pars_virus, parser_news
-from pgSQL import *
+from pgSQL import BaseModel, request_answer, user_group
 from config import day_th
 from telebot import types
 from datetime import datetime, date, time
