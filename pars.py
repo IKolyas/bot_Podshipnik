@@ -2,14 +2,16 @@ import requests
 from bs4 import BeautifulSoup as BS
 from config import opWM
 
-"""Информация о погоде в определённом городе по запросу"""
+
 class Weather:
+    """Информация о погоде в определённом городе по запросу"""
 
     apiID = opWM
 
     def __init__(self, city):
         self.city = city
         self.wind = ''
+
 
     def reqGet(self):
         # Запрос на наличие города в базе данных OpenWeatherMap и получение ID города
@@ -23,6 +25,7 @@ class Weather:
         except Exception as e:
             print("Ошибка данных: ", e)
             pass
+
 
     def weather_in_day(self):
         # Получение информации о текущей погоде на сутки
@@ -54,6 +57,7 @@ class Weather:
                f"Ветер: {data['wind']['speed']} м/с, \n" \
                f"    направление: {data['wind']['deg']}°, {self.wind}"
 
+
     def weather_in_5Day(self):
         # Получение информации о текущей погоде на 5 дней/в работе
         cityID = self.reqGet()
@@ -70,8 +74,8 @@ class Weather:
             pass
 
 
-# Парсинг инфа о вирусе
 def pars_virus(city='Салехард'):
+    # Парсинг инфа о вирусе
     kr_virus = requests.get(f'https://koronainfo.ru/{city}')
     virus_html = BS(kr_virus.content, 'html.parser')
     for _ in virus_html.select('.statistic-block-item'):
@@ -87,8 +91,9 @@ def pars_virus(city='Салехард'):
            Выздоровело: {recovered_all} чел. {recovered_today} (сегодня) \n
            '''
 
-"""Парсин гиа новости."""
+
 def parser_news():
+    # Парсин риа новости.
     viki = requests.get(f'https://ria.ru/')
     html_viki = BS(viki.content, 'html.parser')
 
