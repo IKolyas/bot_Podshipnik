@@ -1,10 +1,6 @@
 import requests
 from bs4 import BeautifulSoup as BS
-import os
-
-
-opWM = os.environ.get('OpenWeatherMap')
-
+from config import opWM
 
 """Информация о погоде в определённом городе по запросу"""
 class Weather:
