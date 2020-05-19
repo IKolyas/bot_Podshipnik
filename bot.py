@@ -9,9 +9,7 @@ from telebot import types
 from datetime import datetime, date, time
 
 
-
 bot = telebot.AsyncTeleBot(token)
-
 # heroku logs --tail
 # КОМАНДЫ
 # - start
@@ -29,6 +27,7 @@ def send_welcome(message):
                      f"Привет, Люди! \nЯ бот. \nПока что я немного туповат, \
                      но мой создатель трудится над этим. \nВ общем чате для общения со мной используйте ' / '")
 
+
 # - virus
 @bot.message_handler(commands=['virus'])
 def virus_command(message):
@@ -43,7 +42,7 @@ def weather_command(message):
     del weather_city
 
 
-'''Регистрация пользователей'''
+# - Регистрация пользователей
 @bot.message_handler(commands=['registration'])
 def reg_user(message):
     keyboard = types.InlineKeyboardMarkup()
@@ -52,6 +51,7 @@ def reg_user(message):
     keyboard.add(yes_button, no_button)
     bot.send_message(message.from_user.id, "Предлогаю тебе зарегистрироваться, это не займёт много времени...",
                      reply_markup=keyboard)
+
 
 @bot.callback_query_handler(func=lambda call: True)
 def reg_key(call):
@@ -70,7 +70,7 @@ def get_birth(message):
     bot.send_message(message.chat.id, registration)
 
 
-"""Новости"""
+# - Новости
 @bot.message_handler(commands=['news'])
 def send_news(message):
     bot.send_sticker(message.chat.id, 'CAACAgIAAxkBAAIKL169A7a8k0SyrPkWW_6zF_fpFsU8AAI5AAMNttIZXzBAtjlTMTQZBA')
@@ -87,7 +87,8 @@ def send_news(message):
         bot.send_message(message.chat.id, day)
         bot.send_sticker(message.chat.id, "CAACAgIAAxkBAAIKKl68gWv_U4RcCpIXEsIT9WDCqguWAAI7AAPRYSgLXdLS1ytBP50ZBA")
 
-"""Обработчик текстовых сообщений"""
+
+# - Обработчик текстовых сообщений
 @bot.message_handler(content_types=["text"])
 def repeat_all_messages(message):
     message.text = message.text.replace("/", "")
@@ -104,7 +105,7 @@ def repeat_all_messages(message):
         bot.send_message(message.chat.id, weather_answer.weather_in_day())
         del req_weather
 
-    else:  # Запрос к базе
+    else:  # запрос к базе
         answer = request_answer.answer(message.text.lower())
         if answer is False:  # Если нет в базе, поиск в сети
             keyboard = types.InlineKeyboardMarkup()
