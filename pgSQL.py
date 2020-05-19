@@ -10,6 +10,8 @@ class BaseModel(Model):
     class Meta:
         database = db
 
+
+
 class request_answer(BaseModel):
     """"Вопрос - ответ, БД"""
     request = TextField()
@@ -20,7 +22,7 @@ class request_answer(BaseModel):
     id = AutoField()
 
     @staticmethod
-    #Поиск ответа на заданный вопрос в базе
+    #Поиск ответа на заданный вопрос в базе, ответ случайный из возможных (random)
     def answer(req_ans):
         try:
             sel = request_answer.select().where(request_answer.request == req_ans)
@@ -70,6 +72,7 @@ class user_group(BaseModel):
                 birth_day=birth_day)
             nos.save()
             return f'Вы успешно зарегистрированы!'
+
 
     @staticmethod
     #Проверка день рождения
