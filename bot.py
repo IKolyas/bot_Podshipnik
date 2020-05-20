@@ -118,7 +118,7 @@ def repeat_all_messages(message):
             bot.send_message(message.chat.id, answer)
 
 
-timerUser.schedule.every().day.at("11:30").do(send_news(message))
+timerUser.schedule.every().day.at("11:30").do(send_news())
 
 
 
