@@ -119,13 +119,13 @@ def repeat_all_messages(message):
 
 
 
-schedule.every().day.at("12:30").do(send_news)
+schedule.every().day.at("12:39").do(send_news)
 
 class ScheduleMessage:
     def try_send_schedule():
         while True:
             schedule.run_pending()
-            time.sleep(1)
+            timer.sleep(1)
 
     def start_process():
         p1 = Process(target=ScheduleMessage.try_send_schedule, args=())
