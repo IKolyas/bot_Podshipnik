@@ -125,6 +125,6 @@ if __name__ == '__main__':
     ScheduleMessage.start_process()
     try:
         bot.infinity_polling(none_stop=True, interval=0.5
-    except Exception as e:
+    except:
         pass
 )
