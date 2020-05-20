@@ -7,7 +7,7 @@ from pgSQL import BaseModel, request_answer, user_group
 from config import day_th
 from telebot import types
 from datetime import datetime, date, time
-
+from timer import ScheduleMessage
 
 bot = telebot.AsyncTeleBot(token)
 # heroku logs --tail
@@ -84,7 +84,7 @@ def send_news(message):
     #Проверка, день рождения у зарегистрированных пользователей
     day = user_group.birthDay(day_th) #day_th - текущая дата
     if day is not False:
-        bot.send_message(message.chat.id, day)
+        bot.send_message(message.chat.id, f'{day} + {datetime.today()}')
         bot.send_sticker(message.chat.id, "CAACAgIAAxkBAAIKKl68gWv_U4RcCpIXEsIT9WDCqguWAAI7AAPRYSgLXdLS1ytBP50ZBA")
 
 
@@ -117,5 +117,16 @@ def repeat_all_messages(message):
             bot.send_message(message.chat.id, answer)
 
 
+                                """ТАЙМЕРЫ"""
+
+schedule.every().day.at("15:50").do(send_news)
+
+
+
 if __name__ == '__main__':
-    bot.infinity_polling(none_stop=True, interval=0.5)
+    ScheduleMessage.start_process()
+    try:
+        bot.infinity_polling(none_stop=True, interval=0.5
+    except Exception as e:
+        pass
+)
