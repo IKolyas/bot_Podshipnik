@@ -117,8 +117,6 @@ def repeat_all_messages(message):
             bot.send_message(message.chat.id, answer)
 
 
-                                """ТАЙМЕРЫ"""
-
 schedule.every().day.at("15:50").do(send_news)
 
 
