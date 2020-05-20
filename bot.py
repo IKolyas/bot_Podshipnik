@@ -85,7 +85,7 @@ def send_news(message):
     #Проверка, день рождения у зарегистрированных пользователей
     day = user_group.birthDay(day_th) #day_th - текущая дата
     if day is not False:
-        bot.send_message(message.chat.id, f'{day} + {datetime.today()}')
+        bot.send_message(message.chat.id, day)
         bot.send_sticker(message.chat.id, "CAACAgIAAxkBAAIKKl68gWv_U4RcCpIXEsIT9WDCqguWAAI7AAPRYSgLXdLS1ytBP50ZBA")
 
 
@@ -118,7 +118,7 @@ def repeat_all_messages(message):
             bot.send_message(message.chat.id, answer)
 
 
-timerUser.schedule.every().day.at("15:50").do(send_news)
+timerUser.schedule.every().day.at("11:24").do(send_news)
 
 
 
