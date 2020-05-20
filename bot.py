@@ -7,7 +7,6 @@ from pgSQL import BaseModel, request_answer, user_group
 from config import day_th
 from telebot import types
 from datetime import datetime, date, time
-from timerUser import ScheduleMessage
 from multiprocessing.context import Process
 import schedule
 
@@ -119,8 +118,19 @@ def repeat_all_messages(message):
             bot.send_message(message.chat.id, answer)
 
 
+class ScheduleMessage():
+    def try_send_schedule():
+        while True:
+            schedule.run_pending()
+            time.sleep(1)
 
-schedule.every().day.at("19:48").do(send_news)
+    def start_process():
+        p1 = Process(target=ScheduleMessage.try_send_schedule, args=())
+        p1.start()
+
+
+
+schedule.every().day.at("19:56").do(send_news)
 
 
 
