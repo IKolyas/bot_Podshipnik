@@ -23,7 +23,7 @@ bot = telebot.AsyncTeleBot(token)
 @bot.message_handler(commands=['start'])
 def send_welcome(message):
     bot.send_sticker(message.chat.id, 'CAACAgIAAxkBAAIKLV69A4QEgThXNn3yXtg8r5jOy_2YAAJFAAMNttIZjBr_PIJ9KtgZBA')
-    timer.sleep(0.1)
+    time.sleep(0.1)
     bot.send_message(message.chat.id,
                      f"Привет, Люди! \nЯ бот. \nПока что я немного туповат, \
                      но мой создатель трудится над этим. \nВ общем чате для общения со мной используйте ' / '")
