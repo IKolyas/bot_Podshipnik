@@ -7,6 +7,7 @@ from pgSQL import BaseModel, request_answer, user_group
 from config import day_th
 from telebot import types
 from datetime import datetime, date, time
+import timer
 from timer import ScheduleMessage
 
 bot = telebot.AsyncTeleBot(token)
@@ -117,7 +118,7 @@ def repeat_all_messages(message):
             bot.send_message(message.chat.id, answer)
 
 
-schedule.every().day.at("15:50").do(send_news)
+timer.schedule.every().day.at("15:50").do(send_news)
 
 
 
