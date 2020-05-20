@@ -123,7 +123,7 @@ def repeat_all_messages(message):
 # ТАЙМЕР
 def timeer_massange():
     id = 976733354
-    bot.send_message(message.from_user.id, 'привет')
+    bot.send_message(id, 'привет')
 
 class ScheduleMessage():
     def try_send_schedule():
@@ -135,7 +135,7 @@ class ScheduleMessage():
         p1 = Process(target=ScheduleMessage.try_send_schedule, args=())
         p1.start()
 
-schedule.every().day.at("20:52").do(timeer_massange)
+schedule.every().day.at("20:55").do(timeer_massange)
 
 
 
