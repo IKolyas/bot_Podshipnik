@@ -7,8 +7,8 @@ from pgSQL import BaseModel, request_answer, user_group
 from config import day_th
 from telebot import types
 from datetime import datetime, date, time
-import timer
-from timer import ScheduleMessage
+import timerUser
+from timerUser import ScheduleMessage
 
 bot = telebot.AsyncTeleBot(token)
 # heroku logs --tail
@@ -23,7 +23,7 @@ bot = telebot.AsyncTeleBot(token)
 @bot.message_handler(commands=['start'])
 def send_welcome(message):
     bot.send_sticker(message.chat.id, 'CAACAgIAAxkBAAIKLV69A4QEgThXNn3yXtg8r5jOy_2YAAJFAAMNttIZjBr_PIJ9KtgZBA')
-    time.sleep(0.1)
+    timer.sleep(0.1)
     bot.send_message(message.chat.id,
                      f"Привет, Люди! \nЯ бот. \nПока что я немного туповат, \
                      но мой создатель трудится над этим. \nВ общем чате для общения со мной используйте ' / '")
@@ -75,13 +75,13 @@ def get_birth(message):
 @bot.message_handler(commands=['news'])
 def send_news(message):
     bot.send_sticker(message.chat.id, 'CAACAgIAAxkBAAIKL169A7a8k0SyrPkWW_6zF_fpFsU8AAI5AAMNttIZXzBAtjlTMTQZBA')
-    time.sleep(0.1)
+    timer.sleep(0.1)
     keyboard = types.InlineKeyboardMarkup()                                             # Больше новостей
     yes_button = types.InlineKeyboardButton(text="РИА НОВОСТИ",
                                             url=f"https://ria.ru/")
     keyboard.add(yes_button)
     bot.send_message(message.chat.id, f"{parser_news()}", reply_markup=keyboard)
-    time.sleep(5)
+    timer.sleep(3)
     #Проверка, день рождения у зарегистрированных пользователей
     day = user_group.birthDay(day_th) #day_th - текущая дата
     if day is not False:
@@ -118,7 +118,7 @@ def repeat_all_messages(message):
             bot.send_message(message.chat.id, answer)
 
 
-timer.schedule.every().day.at("15:50").do(send_news)
+timerUser.schedule.every().day.at("15:50").do(send_news)
 
 
 
