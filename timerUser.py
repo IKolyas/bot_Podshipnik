@@ -1,6 +1,7 @@
 import time
 from multiprocessing.context import Process
 import schedule
+import bot
 
 class ScheduleMessage:
     def try_send_schedule():
