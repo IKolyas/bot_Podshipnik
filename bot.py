@@ -7,8 +7,8 @@ from pgSQL import BaseModel, request_answer, user_group
 from config import day_th
 from telebot import types
 from datetime import datetime, date, time
-import timerUser
-from timerUser import ScheduleMessage
+from multiprocessing.context import Process
+import schedule
 
 bot = telebot.AsyncTeleBot(token)
 # heroku logs --tail
@@ -118,8 +118,18 @@ def repeat_all_messages(message):
             bot.send_message(message.chat.id, answer)
 
 
-timerUser.schedule.every().day.at("12:14").do(bot.send_news)
 
+schedule.every().day.at("12:30").do(send_news)
+
+class ScheduleMessage:
+    def try_send_schedule():
+        while True:
+            schedule.run_pending()
+            time.sleep(1)
+
+    def start_process():
+        p1 = Process(target=ScheduleMessage.try_send_schedule, args=())
+        p1.start()
 
 
 if __name__ == '__main__':
