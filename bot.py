@@ -146,7 +146,7 @@ class ScheduleMessage():
         p1 = Process(target=ScheduleMessage.try_send_schedule, args=())
         p1.start()
 
-schedule.every().day.at("20:02").do(send_news)
+schedule.every().day.at("20:07").do(timeer_massange)
 
 
 
