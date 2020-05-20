@@ -2,7 +2,6 @@ import time
 from multiprocessing.context import Process
 import schedule
 
-"""Таймер событий"""
 class ScheduleMessage:
     def try_send_schedule():
         while True:
