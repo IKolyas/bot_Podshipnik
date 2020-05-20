@@ -118,6 +118,24 @@ def repeat_all_messages(message):
             bot.send_message(message.chat.id, answer)
 
 
+
+# ТАЙМЕР
+def timeer_massange():
+    bot.send_sticker(message.chat.id, 'CAACAgIAAxkBAAIKL169A7a8k0SyrPkWW_6zF_fpFsU8AAI5AAMNttIZXzBAtjlTMTQZBA')
+    timer.sleep(0.1)
+    keyboard = types.InlineKeyboardMarkup()                                             # Больше новостей
+    yes_button = types.InlineKeyboardButton(text="РИА НОВОСТИ",
+                                            url=f"https://ria.ru/")
+    keyboard.add(yes_button)
+    bot.send_message(message.chat.id, f"{parser_news()}", reply_markup=keyboard)
+    timer.sleep(3)
+    #Проверка, день рождения у зарегистрированных пользователей
+    day = user_group.birthDay(day_th) #day_th - текущая дата
+    if day is not False:
+        bot.send_message(message.chat.id, day)
+        bot.send_sticker(message.chat.id, "CAACAgIAAxkBAAIKKl68gWv_U4RcCpIXEsIT9WDCqguWAAI7AAPRYSgLXdLS1ytBP50ZBA")
+
+
 class ScheduleMessage():
     def try_send_schedule():
         while True:
@@ -127,8 +145,6 @@ class ScheduleMessage():
     def start_process():
         p1 = Process(target=ScheduleMessage.try_send_schedule, args=())
         p1.start()
-
-
 
 schedule.every().day.at("19:56").do(send_news)
 
