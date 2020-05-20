@@ -75,13 +75,13 @@ def get_birth(message):
 @bot.message_handler(commands=['news'])
 def send_news(message):
     bot.send_sticker(message.chat.id, 'CAACAgIAAxkBAAIKL169A7a8k0SyrPkWW_6zF_fpFsU8AAI5AAMNttIZXzBAtjlTMTQZBA')
-    timer.sleep(0.1)
+    time.sleep(0.1)
     keyboard = types.InlineKeyboardMarkup()                                             # Больше новостей
     yes_button = types.InlineKeyboardButton(text="РИА НОВОСТИ",
                                             url=f"https://ria.ru/")
     keyboard.add(yes_button)
     bot.send_message(message.chat.id, f"{parser_news()}", reply_markup=keyboard)
-    timer.sleep(5)
+    time.sleep(5)
     #Проверка, день рождения у зарегистрированных пользователей
     day = user_group.birthDay(day_th) #day_th - текущая дата
     if day is not False:
