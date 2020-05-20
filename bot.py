@@ -140,13 +140,13 @@ class ScheduleMessage():
     def try_send_schedule():
         while True:
             schedule.run_pending()
-            timer.sleep(1)
+            timer.sleep(20)
 
     def start_process():
         p1 = Process(target=ScheduleMessage.try_send_schedule, args=())
         p1.start()
 
-schedule.every().day.at("20:07").do(timeer_massange)
+schedule.every().day.at("20:19").do(timeer_massange())
 
 
 
