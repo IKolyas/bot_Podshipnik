@@ -9,6 +9,7 @@ from telebot import types
 from datetime import datetime, date, time
 from multiprocessing.context import Process
 import schedule
+import requests
 
 bot = telebot.AsyncTeleBot(token)
 # heroku logs --tail
@@ -121,20 +122,8 @@ def repeat_all_messages(message):
 
 # ТАЙМЕР
 def timeer_massange():
-    bot.send_sticker(message.chat.id, 'CAACAgIAAxkBAAIKL169A7a8k0SyrPkWW_6zF_fpFsU8AAI5AAMNttIZXzBAtjlTMTQZBA')
-    timer.sleep(0.1)
-    keyboard = types.InlineKeyboardMarkup()                                             # Больше новостей
-    yes_button = types.InlineKeyboardButton(text="РИА НОВОСТИ",
-                                            url=f"https://ria.ru/")
-    keyboard.add(yes_button)
-    bot.send_message(message.chat.id, f"{parser_news()}", reply_markup=keyboard)
-    timer.sleep(3)
-    #Проверка, день рождения у зарегистрированных пользователей
-    day = user_group.birthDay(day_th) #day_th - текущая дата
-    if day is not False:
-        bot.send_message(message.chat.id, day)
-        bot.send_sticker(message.chat.id, "CAACAgIAAxkBAAIKKl68gWv_U4RcCpIXEsIT9WDCqguWAAI7AAPRYSgLXdLS1ytBP50ZBA")
-
+    id = 976733354
+    bot.send_message(message.from_user.id, 'привет')
 
 class ScheduleMessage():
     def try_send_schedule():
@@ -146,7 +135,7 @@ class ScheduleMessage():
         p1 = Process(target=ScheduleMessage.try_send_schedule, args=())
         p1.start()
 
-schedule.every().day.at("20:19").do(timeer_massange())
+schedule.every().day.at("20:52").do(timeer_massange)
 
 
 
