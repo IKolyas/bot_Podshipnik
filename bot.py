@@ -123,7 +123,19 @@ def repeat_all_messages(message):
 # ТАЙМЕР
 def timeer_massange():
     id = 976733354
-    bot.send_message(id, 'привет')
+    bot.send_sticker(id, 'CAACAgIAAxkBAAIKL169A7a8k0SyrPkWW_6zF_fpFsU8AAI5AAMNttIZXzBAtjlTMTQZBA')
+    timer.sleep(0.1)
+    keyboard = types.InlineKeyboardMarkup()                                             # Больше новостей
+    yes_button = types.InlineKeyboardButton(text="РИА НОВОСТИ",
+                                            url=f"https://ria.ru/")
+    keyboard.add(yes_button)
+    bot.send_message(id, f"{parser_news()}", reply_markup=keyboard)
+    timer.sleep(3)
+    #Проверка, день рождения у зарегистрированных пользователей
+    day = user_group.birthDay(day_th) #day_th - текущая дата
+    if day is not False:
+        bot.send_message(id, day)
+        bot.send_sticker(id, "CAACAgIAAxkBAAIKKl68gWv_U4RcCpIXEsIT9WDCqguWAAI7AAPRYSgLXdLS1ytBP50ZBA")
 
 class ScheduleMessage():
     def try_send_schedule():
@@ -135,7 +147,7 @@ class ScheduleMessage():
         p1 = Process(target=ScheduleMessage.try_send_schedule, args=())
         p1.start()
 
-schedule.every().day.at("20:55").do(timeer_massange)
+schedule.every().day.at("21:00").do(timeer_massange)
 
 
 
