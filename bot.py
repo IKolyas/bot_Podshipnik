@@ -9,7 +9,6 @@ from telebot import types
 from datetime import datetime, date, time
 from multiprocessing.context import Process
 import schedule
-import requests
 
 bot = telebot.AsyncTeleBot(token)
 # heroku logs --tail
@@ -120,7 +119,7 @@ def repeat_all_messages(message):
 
 
 
-# ТАЙМЕР
+# ТАЙМЕРs
 def timeer_massange():
     id = 976733354
     bot.send_sticker(id, 'CAACAgIAAxkBAAIKL169A7a8k0SyrPkWW_6zF_fpFsU8AAI5AAMNttIZXzBAtjlTMTQZBA')
@@ -141,13 +140,14 @@ class ScheduleMessage():
     def try_send_schedule():
         while True:
             schedule.run_pending()
-            timer.sleep(20)
+            timer.sleep(30)
 
     def start_process():
         p1 = Process(target=ScheduleMessage.try_send_schedule, args=())
         p1.start()
 
-schedule.every().day.at("21:00").do(timeer_massange)
+schedule.every().day.at("03:40").do(timeer_massange)
+schedule.every().day.at("12:50").do(timeer_massange)
 
 
 
