@@ -6,7 +6,7 @@ from config import token
 from pars import Weather, pars_virus, parser_news
 from pgSQL import request_answer, user_group
 from config import day_th
-from timerUser import TimerUser
+from timerUser import TimerUs
 from timerUser import ScheduleMessage
 
 
