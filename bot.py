@@ -9,7 +9,7 @@ from config import day_th
 from timerUser import Timer, ScheduleMessage
 
 
-bot = telebot.AsyncTeleBot(token)
+bot_tb = telebot.AsyncTeleBot(token)
 
 
 # heroku logs --tail
@@ -21,90 +21,90 @@ bot = telebot.AsyncTeleBot(token)
 # - news
 
 # СТАРТ
-@bot.message_handler(commands=['start'])
+@bot_tb.message_handler(commands=['start'])
 def send_welcome(message):
-    bot.send_sticker(message.chat.id, 'CAACAgIAAxkBAAIKLV69A4QEgThXNn3yXtg8r5jOy_2YAAJFAAMNttIZjBr_PIJ9KtgZBA')
+    bot_tb.send_sticker(message.chat.id, 'CAACAgIAAxkBAAIKLV69A4QEgThXNn3yXtg8r5jOy_2YAAJFAAMNttIZjBr_PIJ9KtgZBA')
     timer.sleep(0.1)
-    bot.send_message(message.chat.id,
+    bot_tb.send_message(message.chat.id,
                      f"Привет, Люди! \nЯ бот. \nПока что я немного туповат, \
                      но мой создатель трудится над этим. \nВ общем чате для общения со мной используйте ' / '")
 
 
 # - virus
-@bot.message_handler(commands=['virus'])
+@bot_tb.message_handler(commands=['virus'])
 def virus_command(message):
-    bot.send_message(message.chat.id, pars_virus())
+    bot_tb.send_message(message.chat.id, pars_virus())
 
 
 # - weather
-@bot.message_handler(commands=['weather'])
+@bot_tb.message_handler(commands=['weather'])
 def weather_command(message):
     weather_city = Weather('Салехард')
-    bot.send_message(message.chat.id, weather_city.weather_in_day())
+    bot_tb.send_message(message.chat.id, weather_city.weather_in_day())
     del weather_city
 
 
 # - Регистрация пользователей
-@bot.message_handler(commands=['registration'])
+@bot_tb.message_handler(commands=['registration'])
 def reg_user(message):
     keyboard = types.InlineKeyboardMarkup()
     yes_button = types.InlineKeyboardButton(text="ДА", callback_data="yes")
     no_button = types.InlineKeyboardButton(text="Подумаю ...", callback_data="no")
     keyboard.add(yes_button, no_button)
-    bot.send_message(message.from_user.id, "Предлогаю тебе зарегистрироваться, это не займёт много времени...",
-                     reply_markup=keyboard)
+    bot_tb.send_message(message.from_user.id, "Предлогаю тебе зарегистрироваться, это не займёт много времени...",
+                        reply_markup=keyboard)
 
 
-@bot.callback_query_handler(func=lambda call: True)
+@bot_tb.callback_query_handler(func=lambda call: True)
 def reg_key(call):
     if call.data == "yes":
-        bot.send_message(call.message.chat.id, "Ваше имя я уже знаю, введите дату рождения в формате: гггг-мм-чч, \n"
+        bot_tb.send_message(call.message.chat.id, "Ваше имя я уже знаю, введите дату рождения в формате: гггг-мм-чч, \n"
                                                "Например: 1978-12-22")
-        bot.register_next_step_handler(call.message, get_birth)
+        bot_tb.register_next_step_handler(call.message, get_birth)
     elif call.data == "no":
-        bot.send_message(call.message.chat.id, "Ок, я на связи")
+        bot_tb.send_message(call.message.chat.id, "Ок, я на связи")
 
 
 def get_birth(message):
     birth_day = message.text.replace("/", "", 1)
     registration = user_group.add_user(message.chat.id, message.from_user.id, message.from_user.first_name,
                                        message.from_user.last_name, birth_day)
-    bot.send_message(message.chat.id, registration)
+    bot_tb.send_message(message.chat.id, registration)
 
 
 # - Новости
-@bot.message_handler(commands=['news'])
+@bot_tb.message_handler(commands=['news'])
 def send_news(message):
-    bot.send_sticker(message.chat.id, 'CAACAgIAAxkBAAIKL169A7a8k0SyrPkWW_6zF_fpFsU8AAI5AAMNttIZXzBAtjlTMTQZBA')
+    bot_tb.send_sticker(message.chat.id, 'CAACAgIAAxkBAAIKL169A7a8k0SyrPkWW_6zF_fpFsU8AAI5AAMNttIZXzBAtjlTMTQZBA')
     timer.sleep(0.1)
     keyboard = types.InlineKeyboardMarkup()  # Больше новостей
     yes_button = types.InlineKeyboardButton(text="РИА НОВОСТИ",
                                             url=f"https://ria.ru/")
     keyboard.add(yes_button)
-    bot.send_message(message.chat.id, f"{parser_news()}", reply_markup=keyboard)
+    bot_tb.send_message(message.chat.id, f"{parser_news()}", reply_markup=keyboard)
     timer.sleep(3)
     # Проверка, день рождения у зарегистрированных пользователей
     day = user_group.birthDay(day_th)  # day_th - текущая дата
     if day is not False:
-        bot.send_message(message.chat.id, day)
-        bot.send_sticker(message.chat.id, "CAACAgIAAxkBAAIKKl68gWv_U4RcCpIXEsIT9WDCqguWAAI7AAPRYSgLXdLS1ytBP50ZBA")
+        bot_tb.send_message(message.chat.id, day)
+        bot_tb.send_sticker(message.chat.id, "CAACAgIAAxkBAAIKKl68gWv_U4RcCpIXEsIT9WDCqguWAAI7AAPRYSgLXdLS1ytBP50ZBA")
 
 
 # - Обработчик текстовых сообщений
-@bot.message_handler(content_types=["text"])
+@bot_tb.message_handler(content_types=["text"])
 def repeat_all_messages(message):
     message.text = message.text.replace("/", "")
 
     """информация по зараженным короновирусом(запрос в телеграме "вирус 'название города'")"""
     if message.text.lower().split(' ')[0] == 'вирус':
-        bot.send_sticker(message.chat.id, 'CAACAgIAAxkBAAIKIl675xAmpJrrYw7GNLDnyyUIYg9fAALIAQACVp29Ch5kbWu8BAS4GQQ')
-        bot.send_message(message.chat.id, pars_virus(message.text.lower().split(' ')[1]))
+        bot_tb.send_sticker(message.chat.id, 'CAACAgIAAxkBAAIKIl675xAmpJrrYw7GNLDnyyUIYg9fAALIAQACVp29Ch5kbWu8BAS4GQQ')
+        bot_tb.send_message(message.chat.id, pars_virus(message.text.lower().split(' ')[1]))
 
     """информация о погоде(запрос в телеграме "погода 'название города'")"""
     if message.text.lower().split(' ')[0] == 'погода':
         req_weather = message.text.lower().split(' ')[1]  # ИНФА ПО ПОГОДЕ с проверкой
         weather_answer = Weather(req_weather)
-        bot.send_message(message.chat.id, weather_answer.weather_in_day())
+        bot_tb.send_message(message.chat.id, weather_answer.weather_in_day())
         del req_weather
 
     else:  # запрос к базе
@@ -114,20 +114,20 @@ def repeat_all_messages(message):
             yes_button = types.InlineKeyboardButton(text="ДА",
                                                     url=f"https://yandex.ru/search/?text={message.text.replace(' ', '%20')}")
             keyboard.add(yes_button)
-            bot.send_message(message.chat.id, 'Не понимаю, о чём Вы? Может посмотрим в сети?', reply_markup=keyboard)
+            bot_tb.send_message(message.chat.id, 'Не понимаю, о чём Вы? Может посмотрим в сети?', reply_markup=keyboard)
         else:
-            bot.send_message(message.chat.id, answer)
+            bot_tb.send_message(message.chat.id, answer)
 
 
 # ТАЙМЕРs
 
 
 schedule.every().day.at("03:40").do(Timer().timer_news)
-schedule.every().day.at("13:10").do(Timer().timer_news)
+schedule.every().day.at("13:20").do(Timer().timer_news)
 
 if __name__ == '__main__':
     ScheduleMessage.start_process()
     try:
-        bot.infinity_polling(none_stop=True, interval=0.5)
+        bot_tb.infinity_polling(none_stop=True, interval=0.5)
     except:
         pass
