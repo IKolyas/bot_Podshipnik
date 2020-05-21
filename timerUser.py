@@ -1,6 +1,6 @@
 from multiprocessing.context import Process
 import schedule
-from .bot import bot_tb
+from bot import bot_tb
 import time
 from telebot import types
 from pgSQL import user_group
