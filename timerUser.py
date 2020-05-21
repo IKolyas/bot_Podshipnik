@@ -8,7 +8,7 @@ from config import day_th
 from pars import parser_news
 
 
-class TimerUser:
+class TimerUs:
     def __init__(self):
         self.chat_id = 976733354
 

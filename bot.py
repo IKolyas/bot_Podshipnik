@@ -124,7 +124,7 @@ def repeat_all_messages(message):
 
 
 schedule.every().day.at("03:40").do(TimerUser().timer_news)
-schedule.every().day.at("13:24").do(TimerUser().timer_news)
+schedule.every().day.at("13:29").do(TimerUser().timer_news)
 
 if __name__ == '__main__':
     ScheduleMessage.start_process()
