@@ -6,9 +6,7 @@ from config import token
 from pars import Weather, pars_virus, parser_news
 from pgSQL import request_answer, user_group
 from config import day_th
-from timerUser import TimerUs
-from timerUser import ScheduleMessage
-
+from multiprocessing.context import Process
 
 bot_tb = telebot.AsyncTeleBot(token)
 
@@ -27,7 +25,7 @@ def send_welcome(message):
     bot_tb.send_sticker(message.chat.id, 'CAACAgIAAxkBAAIKLV69A4QEgThXNn3yXtg8r5jOy_2YAAJFAAMNttIZjBr_PIJ9KtgZBA')
     timer.sleep(0.1)
     bot_tb.send_message(message.chat.id,
-                     f"Привет, Люди! \nЯ бот. \nПока что я немного туповат, \
+                        f"Привет, Люди! \nЯ бот. \nПока что я немного туповат, \
                      но мой создатель трудится над этим. \nВ общем чате для общения со мной используйте ' / '")
 
 
@@ -60,7 +58,7 @@ def reg_user(message):
 def reg_key(call):
     if call.data == "yes":
         bot_tb.send_message(call.message.chat.id, "Ваше имя я уже знаю, введите дату рождения в формате: гггг-мм-чч, \n"
-                                               "Например: 1978-12-22")
+                                                  "Например: 1978-12-22")
         bot_tb.register_next_step_handler(call.message, get_birth)
     elif call.data == "no":
         bot_tb.send_message(call.message.chat.id, "Ок, я на связи")
@@ -122,9 +120,41 @@ def repeat_all_messages(message):
 
 # ТАЙМЕРs
 
+class TimerUs:
+    def __init__(self):
+        self.chat_id = 976733354
 
-schedule.every().day.at("03:40").do(TimerUser().timer_news)
-schedule.every().day.at("13:29").do(TimerUser().timer_news)
+    def timer_news(self):
+        # id = 976733354
+        bot_tb.send_sticker(self.chat_id, 'CAACAgIAAxkBAAIKL169A7a8k0SyrPkWW_6zF_fpFsU8AAI5AAMNttIZXzBAtjlTMTQZBA')
+        timer.sleep(0.1)
+        keyboard = types.InlineKeyboardMarkup()  # Больше новостей
+        yes_button = types.InlineKeyboardButton(text="РИА НОВОСТИ",
+                                                url=f"https://ria.ru/")
+        keyboard.add(yes_button)
+        bot_tb.send_message(self.chat_id, f"{parser_news()}", reply_markup=keyboard)
+        timer.sleep(3)
+        # Проверка, день рождения у зарегистрированных пользователей
+        day = user_group.birthDay(day_th)  # day_th - текущая дата
+        if day is not False:
+            bot_tb.send_message(self.chat_id, day)
+            bot_tb.send_sticker(self.chat_id, "CAACAgIAAxkBAAIKKl68gWv_U4RcCpIXEsIT9WDCqguWAAI7AAPRYSgLXdLS1ytBP50ZBA")
+
+
+class ScheduleMessage:
+
+    def try_send_schedule():
+        while True:
+            schedule.run_pending()
+            timer.sleep(30)
+
+    def start_process():
+        p1 = Process(target=ScheduleMessage.try_send_schedule, args=())
+        p1.start()
+
+
+schedule.every().day.at("03:40").do(TimerUs().timer_news)
+schedule.every().day.at("13:35").do(TimerUs().timer_news)
 
 if __name__ == '__main__':
     ScheduleMessage.start_process()
