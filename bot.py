@@ -1,16 +1,17 @@
 import telebot
-import time as timer
-from config import token
-from pars import Weather
-from pars import pars_virus, parser_news
-from pgSQL import BaseModel, request_answer, user_group
-from config import day_th
 from telebot import types
-from datetime import datetime, date, time
-from multiprocessing.context import Process
+import time as timer
 import schedule
+from config import token
+from pars import Weather, pars_virus, parser_news
+from pgSQL import request_answer, user_group
+from config import day_th
+from timerUser import Timer, ScheduleMessage
+
 
 bot = telebot.AsyncTeleBot(token)
+
+
 # heroku logs --tail
 # КОМАНДЫ
 # - start
@@ -67,7 +68,7 @@ def reg_key(call):
 def get_birth(message):
     birth_day = message.text.replace("/", "", 1)
     registration = user_group.add_user(message.chat.id, message.from_user.id, message.from_user.first_name,
-                   message.from_user.last_name, birth_day)
+                                       message.from_user.last_name, birth_day)
     bot.send_message(message.chat.id, registration)
 
 
@@ -76,14 +77,14 @@ def get_birth(message):
 def send_news(message):
     bot.send_sticker(message.chat.id, 'CAACAgIAAxkBAAIKL169A7a8k0SyrPkWW_6zF_fpFsU8AAI5AAMNttIZXzBAtjlTMTQZBA')
     timer.sleep(0.1)
-    keyboard = types.InlineKeyboardMarkup()                                             # Больше новостей
+    keyboard = types.InlineKeyboardMarkup()  # Больше новостей
     yes_button = types.InlineKeyboardButton(text="РИА НОВОСТИ",
                                             url=f"https://ria.ru/")
     keyboard.add(yes_button)
     bot.send_message(message.chat.id, f"{parser_news()}", reply_markup=keyboard)
     timer.sleep(3)
-    #Проверка, день рождения у зарегистрированных пользователей
-    day = user_group.birthDay(day_th) #day_th - текущая дата
+    # Проверка, день рождения у зарегистрированных пользователей
+    day = user_group.birthDay(day_th)  # day_th - текущая дата
     if day is not False:
         bot.send_message(message.chat.id, day)
         bot.send_sticker(message.chat.id, "CAACAgIAAxkBAAIKKl68gWv_U4RcCpIXEsIT9WDCqguWAAI7AAPRYSgLXdLS1ytBP50ZBA")
@@ -101,7 +102,7 @@ def repeat_all_messages(message):
 
     """информация о погоде(запрос в телеграме "погода 'название города'")"""
     if message.text.lower().split(' ')[0] == 'погода':
-        req_weather = message.text.lower().split(' ')[1] # ИНФА ПО ПОГОДЕ с проверкой
+        req_weather = message.text.lower().split(' ')[1]  # ИНФА ПО ПОГОДЕ с проверкой
         weather_answer = Weather(req_weather)
         bot.send_message(message.chat.id, weather_answer.weather_in_day())
         del req_weather
@@ -118,39 +119,11 @@ def repeat_all_messages(message):
             bot.send_message(message.chat.id, answer)
 
 
-
 # ТАЙМЕРs
-def timeer_massange():
-    id = 976733354
-    bot.send_sticker(id, 'CAACAgIAAxkBAAIKL169A7a8k0SyrPkWW_6zF_fpFsU8AAI5AAMNttIZXzBAtjlTMTQZBA')
-    timer.sleep(0.1)
-    keyboard = types.InlineKeyboardMarkup()                                             # Больше новостей
-    yes_button = types.InlineKeyboardButton(text="РИА НОВОСТИ",
-                                            url=f"https://ria.ru/")
-    keyboard.add(yes_button)
-    bot.send_message(id, f"{parser_news()}", reply_markup=keyboard)
-    timer.sleep(3)
-    #Проверка, день рождения у зарегистрированных пользователей
-    day = user_group.birthDay(day_th) #day_th - текущая дата
-    if day is not False:
-        bot.send_message(id, day)
-        bot.send_sticker(id, "CAACAgIAAxkBAAIKKl68gWv_U4RcCpIXEsIT9WDCqguWAAI7AAPRYSgLXdLS1ytBP50ZBA")
-
-class ScheduleMessage():
-    def try_send_schedule():
-        while True:
-            schedule.run_pending()
-            timer.sleep(30)
-
-    def start_process():
-        p1 = Process(target=ScheduleMessage.try_send_schedule, args=())
-        p1.start()
-
-schedule.every().day.at("03:40").do(timeer_massange)
-schedule.every().day.at("12:50").do(timeer_massange)
 
 
-
+schedule.every().day.at("03:40").do(Timer().timer_news)
+schedule.every().day.at("13:10").do(Timer().timer_news)
 
 if __name__ == '__main__':
     ScheduleMessage.start_process()
