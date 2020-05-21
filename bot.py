@@ -6,7 +6,7 @@ from config import token
 from pars import Weather, pars_virus, parser_news
 from pgSQL import request_answer, user_group
 from config import day_th
-from timerUser import Timer as TimUS
+from timerUser import TimerUser
 from timerUser import ScheduleMessage
 
 
@@ -123,8 +123,8 @@ def repeat_all_messages(message):
 # ТАЙМЕРs
 
 
-schedule.every().day.at("03:40").do(TimUS().timer_news)
-schedule.every().day.at("13:24").do(TimUS().timer_news)
+schedule.every().day.at("03:40").do(TimerUser().timer_news)
+schedule.every().day.at("13:24").do(TimerUser().timer_news)
 
 if __name__ == '__main__':
     ScheduleMessage.start_process()
