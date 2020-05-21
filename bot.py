@@ -6,7 +6,8 @@ from config import token
 from pars import Weather, pars_virus, parser_news
 from pgSQL import request_answer, user_group
 from config import day_th
-from timerUser import Timer, ScheduleMessage
+from timerUser import Timer as TimUS
+from timerUser import ScheduleMessage
 
 
 bot_tb = telebot.AsyncTeleBot(token)
@@ -122,8 +123,8 @@ def repeat_all_messages(message):
 # ТАЙМЕРs
 
 
-schedule.every().day.at("03:40").do(Timer().timer_news)
-schedule.every().day.at("13:20").do(Timer().timer_news)
+schedule.every().day.at("03:40").do(TimUS().timer_news)
+schedule.every().day.at("13:24").do(TimUS().timer_news)
 
 if __name__ == '__main__':
     ScheduleMessage.start_process()
