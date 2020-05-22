@@ -125,20 +125,20 @@ class TimerUs:
         self.chat_id = 976733354
 
     def timer_news(self):
-        # id = 976733354
-        bot_tb.send_sticker(chat.self.chat_id, 'CAACAgIAAxkBAAIKL169A7a8k0SyrPkWW_6zF_fpFsU8AAI5AAMNttIZXzBAtjlTMTQZBA')
+        id = 976733354
+        bot_tb.send_sticker(chat.id, 'CAACAgIAAxkBAAIKL169A7a8k0SyrPkWW_6zF_fpFsU8AAI5AAMNttIZXzBAtjlTMTQZBA')
         timer.sleep(0.1)
         keyboard = types.InlineKeyboardMarkup()  # Больше новостей
         yes_button = types.InlineKeyboardButton(text="РИА НОВОСТИ",
                                                 url=f"https://ria.ru/")
         keyboard.add(yes_button)
-        bot_tb.send_message(chat.self.chat_id, f"{parser_news()}", reply_markup=keyboard)
+        bot_tb.send_message(chat.id, f"{parser_news()}", reply_markup=keyboard)
         timer.sleep(3)
         # Проверка, день рождения у зарегистрированных пользователей
         day = user_group.birthDay(day_th)  # day_th - текущая дата
         if day is not False:
-            bot_tb.send_message(chat.self.chat_id, day)
-            bot_tb.send_sticker(chat.self.chat_id, "CAACAgIAAxkBAAIKKl68gWv_U4RcCpIXEsIT9WDCqguWAAI7AAPRYSgLXdLS1ytBP50ZBA")
+            bot_tb.send_message(chat.id, day)
+            bot_tb.send_sticker(chat.id, "CAACAgIAAxkBAAIKKl68gWv_U4RcCpIXEsIT9WDCqguWAAI7AAPRYSgLXdLS1ytBP50ZBA")
 
 
 class ScheduleMessage:
@@ -153,7 +153,7 @@ class ScheduleMessage:
         p1.start()
 
 
-schedule.every().day.at("05:35").do(TimerUs().timer_news)
+schedule.every().day.at("05:48").do(TimerUs().timer_news)
 schedule.every().day.at("12:50").do(TimerUs().timer_news)
 
 if __name__ == '__main__':
