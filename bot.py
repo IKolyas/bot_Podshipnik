@@ -154,7 +154,7 @@ class ScheduleMessage:
 
 
 schedule.every().day.at("03:40").do(TimerUs().timer_news)
-schedule.every().day.at("13:35").do(TimerUs().timer_news)
+schedule.every().day.at("12:50").do(TimerUs().timer_news)
 
 if __name__ == '__main__':
     ScheduleMessage.start_process()
