@@ -153,7 +153,7 @@ class ScheduleMessage:
         p1.start()
 
 
-schedule.every().day.at("03:40").do(TimerUs().timer_news)
+schedule.every().day.at("03:30").do(TimerUs().timer_news)
 schedule.every().day.at("12:50").do(TimerUs().timer_news)
 
 if __name__ == '__main__':
