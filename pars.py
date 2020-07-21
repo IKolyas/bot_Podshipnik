@@ -100,6 +100,7 @@ def parser_news():
             news1 = html_viki.select('.cell-list__item .cell-list__item-title')[1].text
             news2 = html_viki.select('.cell-list__item .cell-list__item-title')[2].text
             news3 = html_viki.select('.cell-list__item .cell-list__item-title')[3].text
-            return f'Новости ... \n- {news} \n- {news1} \n- {news2} \n- {news3} \nБольше новостей и подробности на портале ...'
+            return f'Новости ... \n- {news} \n- {news1} \n- {news2} \n- {news3} \nБольше новостей и подробности на ' \
+                   f'портале ... '
         except Exception:
             pass
