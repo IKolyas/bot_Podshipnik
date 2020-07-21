@@ -41,15 +41,6 @@ def weather_command(message):
     weather_city = Weather('Салехард')
     bot_tb.send_message(message.chat.id, weather_city.weather_in_day())
     del weather_city
-    markup = types.ReplyKeyboardMarkup()
-    itembtna = types.KeyboardButton('a')
-    itembtnv = types.KeyboardButton('v')
-    itembtnc = types.KeyboardButton('c')
-    itembtnd = types.KeyboardButton('d')
-    itembtne = types.KeyboardButton('e')
-    markup.row(itembtna, itembtnv)
-    markup.row(itembtnc, itembtnd, itembtne)
-    bot_tb.send_message(message.chat_id, "Choose one letter:", reply_markup=markup)
 
 
 # - Регистрация пользователей
