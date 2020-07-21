@@ -12,7 +12,6 @@ class Weather:
         self.city = city
         self.wind = ''
 
-
     def reqGet(self):
         # Запрос на наличие города в базе данных OpenWeatherMap и получение ID города
         s_city = f"{self.city}, RU"
@@ -25,7 +24,6 @@ class Weather:
         except Exception as e:
             print("Ошибка данных: ", e)
             pass
-
 
     def weather_in_day(self):
         # Получение информации о текущей погоде на сутки
@@ -56,7 +54,6 @@ class Weather:
                f"    ощущается как {data['main']['feels_like']}°С, {data['weather'][0]['description']} \n" \
                f"Ветер: {data['wind']['speed']} м/с, \n" \
                f"    направление: {data['wind']['deg']}°, {self.wind}"
-
 
     def weather_in_5Day(self):
         # Получение информации о текущей погоде на 5 дней/в работе
