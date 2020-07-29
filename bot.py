@@ -156,6 +156,6 @@ schedule.every().day.at("12:50").do(TimerUs().timer_news)
 if __name__ == '__main__':
     ScheduleMessage.start_process()
     try:
-        bot_tb.infinity_polling(none_stop=True, interval=0.5)
+        bot_tb.infinity_polling(none_stop=True, interval=0.2)
     except:
         pass
