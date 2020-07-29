@@ -90,7 +90,7 @@ def pars_virus(city='Салехард'):
 
 
 def parser_news():
-    # Парсин риа новости.
+    # риа новости.
     viki = requests.get(f'https://ria.ru/')
     html_viki = BS(viki.content, 'html.parser')
 
