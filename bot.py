@@ -57,7 +57,7 @@ def reg_user(message):
 @bot_tb.callback_query_handler(func=lambda call: True)
 def reg_key(call):
     if call.data == "yes":
-        bot_tb.send_message(call.message.chat.id, "Ваше имя я уже знаю, введите дату рождения в формате: гггг-мм-чч, \n"
+        bot_tb.send_message(call.message.chat.id, "Введите дату рождения в формате: гггг-мм-чч, \n"
                                                   "Например: 1978-12-22")
         bot_tb.register_next_step_handler(call.message, get_birth)
     elif call.data == "no":
