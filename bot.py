@@ -11,7 +11,7 @@ from multiprocessing.context import Process
 bot_tb = telebot.AsyncTeleBot(token)
 
 
-# heroku logs --tail
+# heroku logs --tail --app polar-atoll-79899
 # КОМАНДЫ
 # - start
 # - registration
