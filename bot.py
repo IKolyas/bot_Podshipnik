@@ -113,12 +113,9 @@ def repeat_all_messages(message):
             yes_button = types.InlineKeyboardButton(text="ДА",
                                                     url=f"https://yandex.ru/search/?text={message.text.replace(' ', '%20')}")
             keyboard.add(yes_button)
-            bot_tb.send_message(message.chat.id, 'Не понимаю, о чём Вы? Может посмотрим в сети?', reply_markup=keyboard)
+            bot_tb.send_message(message.chat.id, 'Не понимаю, о чём Вы? go Google...?', reply_markup=keyboard)
         else:
             bot_tb.send_message(message.chat.id, answer)
-
-
-# ТАЙМЕРs
 
 class TimerUs:
     def __init__(self):
