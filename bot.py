@@ -117,41 +117,41 @@ def repeat_all_messages(message):
         else:
             bot_tb.send_message(message.chat.id, answer)
 
-# class TimerUs:
-#     def __init__(self):
-#         self.chat_id = 976733354
+class TimerUs:
+    def __init__(self):
+        self.chat_id = 976733354
 
-#     def timer_news(self):
-#         #id = 976733354
-#         bot_tb.send_sticker(self.chat_id, 'CAACAgIAAxkBAAIKL169A7a8k0SyrPkWW_6zF_fpFsU8AAI5AAMNttIZXzBAtjlTMTQZBA')
-#         timer.sleep(0.1)
-#         keyboard = types.InlineKeyboardMarkup()  # Больше новостей
-#         yes_button = types.InlineKeyboardButton(text="РИА НОВОСТИ",
-#                                                 url=f"https://ria.ru/")
-#         keyboard.add(yes_button)
-#         bot_tb.send_message(self.chat_id, f"{parser_news()}", reply_markup=keyboard)
-#         timer.sleep(3)
-#         # Проверка, день рождения у зарегистрированных пользователей
-#         day = user_group.birthDay(day_th)  # day_th - текущая дата
-#         if day is not False:
-#             bot_tb.send_message(self.chat_id, day)
-#             bot_tb.send_sticker(self.chat_id, "CAACAgIAAxkBAAIKKl68gWv_U4RcCpIXEsIT9WDCqguWAAI7AAPRYSgLXdLS1ytBP50ZBA")
-
-
-# class ScheduleMessage:
-
-#     def try_send_schedule():
-#         while True:
-#             schedule.run_pending()
-#             timer.sleep(30)
-
-#     def start_process():
-#         p1 = Process(target=ScheduleMessage.try_send_schedule, args=())
-#         p1.start()
+    def timer_news(self):
+        #id = 976733354
+        bot_tb.send_sticker(self.chat_id, 'CAACAgIAAxkBAAIKL169A7a8k0SyrPkWW_6zF_fpFsU8AAI5AAMNttIZXzBAtjlTMTQZBA')
+        timer.sleep(0.1)
+        keyboard = types.InlineKeyboardMarkup()  # Больше новостей
+        yes_button = types.InlineKeyboardButton(text="РИА НОВОСТИ",
+                                                url=f"https://ria.ru/")
+        keyboard.add(yes_button)
+        bot_tb.send_message(self.chat_id, f"{parser_news()}", reply_markup=keyboard)
+        timer.sleep(3)
+        # Проверка, день рождения у зарегистрированных пользователей
+        day = user_group.birthDay(day_th)  # day_th - текущая дата
+        if day is not False:
+            bot_tb.send_message(self.chat_id, day)
+            bot_tb.send_sticker(self.chat_id, "CAACAgIAAxkBAAIKKl68gWv_U4RcCpIXEsIT9WDCqguWAAI7AAPRYSgLXdLS1ytBP50ZBA")
 
 
-# schedule.every().day.at("03:30").do(TimerUs().timer_news)
-# schedule.every().day.at("12:50").do(TimerUs().timer_news)
+class ScheduleMessage:
+
+    def try_send_schedule():
+        while True:
+            schedule.run_pending()
+            timer.sleep(30)
+
+    def start_process():
+        p1 = Process(target=ScheduleMessage.try_send_schedule, args=())
+        p1.start()
+
+
+schedule.every().day.at("03:30").do(TimerUs().timer_news)
+schedule.every().day.at("12:50").do(TimerUs().timer_news)
 
 if __name__ == '__main__':
     ScheduleMessage.start_process()
