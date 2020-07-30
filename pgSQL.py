@@ -81,7 +81,7 @@ class user_group(BaseModel):
             sel = user_group.select().where(user_group.birth_day == self).get()
             if str(sel.birth_day) == str(self):
                 return f"Сегодня день рождения у '{sel.user_name} {sel.user_last_name.replace('None', '')}'!!!\n" \
-                       f"Поздравляем!!!\n" \
+                       f"Поздравляем!!!!\n" \
 
             else:
                 pass
