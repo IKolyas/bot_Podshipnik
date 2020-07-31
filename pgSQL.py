@@ -75,7 +75,6 @@ class user_group(BaseModel):
 
 
     @staticmethod
-    #Проверка день рождения
     def birthDay(self):
         try:
             sel = user_group.select().where(user_group.birth_day == self).get()
