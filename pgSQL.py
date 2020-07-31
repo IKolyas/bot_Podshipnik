@@ -22,7 +22,6 @@ class request_answer(BaseModel):
     id = AutoField()
 
     @staticmethod
-    #Поиск ответа на заданный вопрос в базе, ответ случайный из возможных (random)
     def answer(req_ans):
         try:
             sel = request_answer.select().where(request_answer.request == req_ans)
