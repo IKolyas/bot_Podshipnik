@@ -119,12 +119,13 @@ def repeat_all_messages(message):
         else:
             bot_tb.send_message(message.chat.id, answer)
 
+
 class TimerUs:
     def __init__(self):
         self.chat_id = 976733354
 
     def timer_news(self):
-        #id = 976733354
+        # id = 976733354
         bot_tb.send_sticker(self.chat_id, 'CAACAgIAAxkBAAIKL169A7a8k0SyrPkWW_6zF_fpFsU8AAI5AAMNttIZXzBAtjlTMTQZBA')
         timer.sleep(0.1)
         keyboard = types.InlineKeyboardMarkup()  # Больше новостей
@@ -142,13 +143,15 @@ class TimerUs:
 
 class ScheduleMessage:
 
-    def try_send_schedule():
+    @staticmethod
+    def try_send():
         while True:
             schedule.run_pending()
             timer.sleep(30)
 
+    @staticmethod
     def start_process():
-        p1 = Process(target=ScheduleMessage.try_send_schedule, args=())
+        p1 = Process(target=ScheduleMessage.try_send, args=())
         p1.start()
 
 
