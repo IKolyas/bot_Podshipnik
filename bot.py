@@ -19,7 +19,9 @@ bot_tb = telebot.AsyncTeleBot(token)
 # - weather
 # - news
 
+
 # СТАРТ
+
 @bot_tb.message_handler(commands=['start'])
 def send_welcome(message):
     bot_tb.send_sticker(message.chat.id, 'CAACAgIAAxkBAAIKLV69A4QEgThXNn3yXtg8r5jOy_2YAAJFAAMNttIZjBr_PIJ9KtgZBA')
