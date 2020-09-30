@@ -7,6 +7,6 @@ pyTelegramBotAPI==3.7.2
 requests==2.23.0
 beautifulsoup4==4.9.0
 peewee==3.13.3
-gunicorn==19.7.0
+gunicorn==19.9.0
 pip==20.1
 schedule==0.6.0
