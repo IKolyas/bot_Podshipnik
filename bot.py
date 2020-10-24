@@ -7,6 +7,7 @@ from pars import Weather, pars_virus, parser_news
 from pgSQL import request_answer, user_group
 from config import day_th
 from multiprocessing.context import Process
+import datetime
 
 bot_tb = telebot.AsyncTeleBot(token)
 
@@ -139,7 +140,19 @@ class TimerUs:
         if day is not False:
             bot_tb.send_message(self.chat_id, day)
             bot_tb.send_sticker(self.chat_id, "CAACAgIAAxkBAAIKKl68gWv_U4RcCpIXEsIT9WDCqguWAAI7AAPRYSgLXdLS1ytBP50ZBA")
-
+    
+    def timer_DMB(self):
+        a = datetime.datetime.now()
+        dday = datetime.datetime(2021, 10, 16)
+        go_dmb = dday-a
+        if (go_dmb == '1'):
+            go_dmb = f'До дембея осталось go_dmb день'
+        elif ('1' < str(go_dmb)[-1] < '5'): 
+            go_dmb = f'До дембея осталось go_dmb дня'
+        else:
+            go_dmb = f'До дембея осталось go_dmb дней'
+        bot_tb.send_message(self.chat_id, go_dmb)
+        
 
 class ScheduleMessage:
 
@@ -157,6 +170,7 @@ class ScheduleMessage:
 
 schedule.every().day.at("03:30").do(TimerUs().timer_news)
 schedule.every().day.at("12:40").do(TimerUs().timer_news)
+schedule.every().day.at("03:00").do(TimerUs().timer_news)
 
 if __name__ == '__main__':
     ScheduleMessage.start_process()
