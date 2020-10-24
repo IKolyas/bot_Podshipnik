@@ -147,7 +147,7 @@ class TimerUs:
         go_dmb = dday-a
         if (go_dmb.days == '1'):
             go_dmb = f'До дембея осталось {go_dmb.days} день'
-        elif ('1' < str(go_dmb.days)[-1] < '5'): 
+        elif (1 < int(str(go_dmb.days)[-1]) < 5): 
             go_dmb = f'До дембея осталось {go_dmb.days} дня'
         else:
             go_dmb = f'До дембея осталось {go_dmb.days} дней'
