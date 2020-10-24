@@ -145,9 +145,9 @@ class TimerUs:
         a = datetime.datetime.now()
         dday = datetime.datetime(2021, 10, 16)
         go_dmb = dday-a
-        if (go_dmb == '1'):
+        if (go_dmb.days == '1'):
             go_dmb = f'До дембея осталось {go_dmb.days} день'
-        elif ('1' < str(go_dmb)[-1] < '5'): 
+        elif ('1' < str(go_dmb.days)[-1] < '5'): 
             go_dmb = f'До дембея осталось {go_dmb.days} дня'
         else:
             go_dmb = f'До дембея осталось {go_dmb.days} дней'
@@ -170,7 +170,7 @@ class ScheduleMessage:
 
 schedule.every().day.at("03:30").do(TimerUs().timer_news)
 schedule.every().day.at("12:40").do(TimerUs().timer_news)
-schedule.every().day.at("03:10").do(TimerUs().timer_DMB)
+schedule.every().day.at("03:12").do(TimerUs().timer_DMB)
 
 if __name__ == '__main__':
     ScheduleMessage.start_process()
